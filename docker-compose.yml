@@ -1,0 +1,19 @@
+services:
+
+  laminas:
+    container_name : laminas
+    image: php:7.4-apache
+    build: .
+    restart: unless-stopped
+    ports:
+      - 8088:80
+    volumes: 
+      - ./:/var/www/
+    external_links:
+      - mysql_57
+
+networks:
+
+  default:
+    external:
+      name: uni_network

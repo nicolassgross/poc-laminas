@@ -1,0 +1,66 @@
+:root {
+    --brand-color: #013755;
+}
+
+.navbar {
+    background-color: var(--brand-color);
+}
+
+.btn-primary {
+    background-color: var(--brand-color);
+    border-color: var(--brand-color);
+}
+
+.login-box {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 280px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #4caf50;
+}
+
+.login-box h1 {
+  font-size: 40px;
+  border-bottom: 6px solid #4caf50;
+  padding: 13px 0;
+  text-align: center;
+}
+
+.textbox {
+  width: 100%;
+  overflow: hidden;
+  font-size: 20px;
+  padding: 8px 0;
+  margin: 8px 0;
+  border-bottom: 1px solid #4caf50;
+}
+
+.textbox i {
+  width: 26px;
+  float: left;
+  text-align: center;
+}
+
+.textbox input {
+  border: none;
+  outline: none;
+  background: none;
+  color: #4caf50;
+  font-size: 18px;
+  width: 80%;
+  float: left;
+  margin: 0 10px;
+}
+
+.btn {
+  width: 100%;
+  background: #4caf50;
+  color: white;
+  font-size: 18px;
+  padding: 5px;
+  border: none;
+  margin: 12px 0;
+  border-radius: 25px;
+}
