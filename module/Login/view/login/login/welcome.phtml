@@ -29,6 +29,9 @@
 					</div>
 					<div class="col-sm-6">
 						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar nova pessoa</span></a>
+						<form action="<?= $this->url('logout', ['action' => 'logout']) ?>">
+							<button class="btn btn-success" type="submit"><span>Logout</span></button>
+						</form>
 					</div>
 				</div>
 			</div>

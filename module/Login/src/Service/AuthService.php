@@ -24,7 +24,6 @@ class AuthService
         $ds_login
     ) : string
     {
-
         $customPayload = [
             'sub' => $cd_pessoa,
             'aud' => $ds_login

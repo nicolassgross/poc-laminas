@@ -60,12 +60,12 @@ class LoginController extends AbstractActionController
         return new ViewModel();
     }
 
-    // public function logoutAction()
-    // {
-    //     $this->sessionManager->destroy();
+    public function logoutAction()
+    {
+        setcookie('jwt_token', '');
 
-    //     return $this->redirect()->toRoute('login');
-    // }
+        return $this->redirect()->toRoute('login');
+    }
 
     public function validaAutorizacaoPorToken()
     {
