@@ -8,6 +8,10 @@
  * @see https://docs.laminas.dev/tutorials/advanced-config/#environment-specific-application-configuration
  */
 
+use Laminas\ServiceManager\Factory\InvokableFactory;
+use Login\Service\AuthService;
+use Login\Service\Factory\AuthServiceFactory;
+
 return [
     // Retrieve list of modules used in this application.
     'modules' => require __DIR__ . '/modules.config.php',
@@ -61,5 +65,10 @@ return [
 
     // Initial configuration with which to seed the ServiceManager.
     // Should be compatible with Laminas\ServiceManager\Config.
-    // 'service_manager' => [],
+    'service_manager' => [
+        'factories' => [
+            AuthService::class => AuthServiceFactory::class
+        ],
+        'shared_by_default'  => true,
+    ],
 ];

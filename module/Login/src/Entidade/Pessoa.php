@@ -3,7 +3,8 @@
 namespace Login\Entidade;
 
 /**
- * Pessoa
+ * @ORM\Table(name="Pessoa")
+ * @ORM\Entity(repositoryClass=PessoaRepository::class)
  */
 class Pessoa
 {

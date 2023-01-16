@@ -8,71 +8,64 @@ use Login\Entidade\Pessoa;
 
 class PessoaRepository extends EntityRepository
 {
-    private $objPessoaRepository;
     private $entityManager;
 
     public function __construct(EntityManager $entityManager)
     {
-        $this->objPessoaRepository = $entityManager->getRepository(Pessoa::class);
         $this->entityManager = $entityManager;
     }
 
-    public function insert(Pessoa $pessoa)
+    public function create(Pessoa $pessoa)
     {
         $this->entityManager->persist($pessoa);
         $this->entityManager->flush();
-
-        return true;
     }
 
-    public function update(
-        int $id,
-        array $arrDadosAtualizados
-    )
+    public function read($id)
     {
-        $user = $this->objPessoaRepository->find($id);
+        return $this->entityManager->find(Pessoa::class, $id);
+    }
 
-        if(empty($user)) {
-            return false;
-        }
-
-        //vai percorrer o array que contém os novos dados a serem atualizados, verificar o valor, criar o setter com base nas chaves do array
-        //e se o método existir na entidade Pessoa, irá setar o dado, caso contrário não irá alterar outros campos do registro.
-        foreach($arrDadosAtualizados as $key => $value) {
-            if(!empty($value)) {
-                $setter = 'set' . ucfirst($key);
-                if (method_exists($user, $setter)) {
-                    $user->{$setter}($value);
-                }
-            }
-        }
-        
-        $this->entityManager->persist($user);
+    public function update(Pessoa $pessoa)
+    {
+        $this->entityManager->merge($pessoa);
         $this->entityManager->flush();
-
-        return true;
     }
 
-    public function delete(int $id)
+    public function delete($id)
     {
-        $user = $this->objPessoaRepository->find($id);
-
-        if(empty($user)) {
-            return false;
-        } 
-
-        $this->entityManager->remove($user);
+        $pessoa = $this->read($id);
+        $this->entityManager->remove($pessoa);
         $this->entityManager->flush();
-
-        return true;
     }
 
-    public function listUser(int $id = null)
+    public function findByCredentials($ds_login, $ds_senha)
     {
-        if(empty($id)) {
-            return $this->objPessoaRepository->findAll();
-        }
+        $objQuery = $this->entityManager->createQueryBuilder();
 
-        return array($this->objPessoaRepository->find($id));
+        $objQuery->select(
+            [
+                'p.cd_pessoa',
+                'p.ds_login',
+                'p.ds_senha'
+            ]
+        );
+
+        $objQuery->from(
+            Pessoa::class,
+            'p'
+        );
+
+        $objQuery->andWhere(
+            $objQuery->expr()->eq('p.ds_login', ':ds_login'),
+            $objQuery->expr()->eq('p.ds_senha', ':ds_senha')
+        );
+
+        $objQuery->setParameter('ds_login', $ds_login);
+        $objQuery->setParameter('ds_senha', $ds_senha);
+
+        $arrDados = $objQuery->getQuery()->getOneOrNullResult();
+
+        return $arrDados;
     }
 }
